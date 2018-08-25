@@ -28,11 +28,23 @@ let conf = {
           use: [
             { loader: 'css-loader', options: { sourceMap: true } },
             { loader: 'postcss-loader', options: { sourceMap: true } },
+            { loader: "resolve-url-loader", options: { attempts: 1, debug: true } },
             { loader: 'sass-loader', options: { sourceMap: true } }
           ],
-          publicPath: '/dist',
+          // publicPath: '/dist',
         })
-      }
+      },
+      {
+        test: /\.(woff|woff2)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'fonts/',
+          }
+        }
+      },
     ]
   },
   plugins: [
@@ -46,7 +58,7 @@ let conf = {
       template: './src/index.html',
       filename: 'index.html'
     }),
-  ]
+  ],
 };
 
 module.exports = (env, options) => {
