@@ -7,7 +7,9 @@ module.exports = {
       sort: true,
     },
     'cssnano': {
-      preset: 'default',
+      preset: ['default', {
+        cssDeclarationSorter: false,
+      }]
     },
   },
 }
