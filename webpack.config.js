@@ -9,6 +9,10 @@ module.exports = {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[chunkhash].js'
   },
+  devServer: {
+    overlay: true
+  },
+  devtool: 'eval-sourcemap',
   module: {
     rules: [
       {
