@@ -18,14 +18,19 @@ let conf = {
         test: /\.js$/,
         exclude: /node_modules/,
         use: {
-          loader: "babel-loader"
+          loader: 'babel-loader'
         }
       },
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'postcss-loader', 'sass-loader']
+          use: [
+            { loader: 'css-loader', options: { sourceMap: true } },
+            { loader: 'postcss-loader', options: { sourceMap: true } },
+            { loader: 'sass-loader', options: { sourceMap: true } }
+          ],
+          publicPath: '/dist',
         })
       }
     ]
@@ -33,7 +38,7 @@ let conf = {
   plugins: [
     new CleanWebpackPlugin('dist', {} ),
     new ExtractTextPlugin(
-      {filename: 'style.[chunkhash].css', disable: false, allChunks: true}
+      {filename: 'css/style.[chunkhash].css', disable: false, allChunks: true}
     ),
     new HtmlWebpackPlugin({
       inject: false,
@@ -47,7 +52,7 @@ let conf = {
 module.exports = (env, options) => {
   let production = options.mode === 'production';
 
-  conf.devtool = production ? false : 'eval-sourcemap';
+  conf.devtool = production ? false : 'sourcemap';
 
   return conf;
 }
