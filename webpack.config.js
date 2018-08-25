@@ -3,7 +3,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
-module.exports = {
+let conf = {
   entry: { main: './src/index.js' },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -12,7 +12,6 @@ module.exports = {
   devServer: {
     overlay: true
   },
-  devtool: 'eval-sourcemap',
   module: {
     rules: [
       {
@@ -44,3 +43,11 @@ module.exports = {
     }),
   ]
 };
+
+module.exports = (env, options) => {
+  let production = options.mode === 'production';
+
+  conf.devtool = production ? false : 'eval-sourcemap';
+
+  return conf;
+}
