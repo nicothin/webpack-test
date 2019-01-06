@@ -1,10 +1,14 @@
 const path = require('path');
+const fs = require('fs');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const htmlPlugins = generateHtmlPlugins('./src/pages')
 
 let conf = {
-  entry: { main: './src/index.js' },
+  entry: {
+    main: './src/index.js'
+  },
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[chunkhash].js'
@@ -52,13 +56,7 @@ let conf = {
     new ExtractTextPlugin(
       {filename: 'css/style.[chunkhash].css', disable: false, allChunks: true}
     ),
-    new HtmlWebpackPlugin({
-      inject: false,
-      hash: true,
-      template: './src/index.html',
-      filename: 'index.html'
-    }),
-  ],
+  ].concat(htmlPlugins),
 };
 
 module.exports = (env, options) => {
@@ -67,4 +65,18 @@ module.exports = (env, options) => {
   conf.devtool = production ? false : 'sourcemap';
 
   return conf;
+}
+
+function generateHtmlPlugins(templateDir) {
+  const templateFiles = fs.readdirSync(path.resolve(__dirname, templateDir));
+  return templateFiles.map(item => {
+    const parts = item.split('.');
+    const name = parts[0];
+    const extension = parts[1];
+    return new HtmlWebpackPlugin({
+      filename: `${name}.html`,
+      template: path.resolve(__dirname, `${templateDir}/${name}.${extension}`),
+      inject: false,
+    })
+  })
 }

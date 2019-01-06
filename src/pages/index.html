@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+</head>
+<body>
+
+  <div class="foo">Hello, world! version 2</div>
+
+  <img src="img/joker.jpg" alt="">
+
+  <script src="<%= htmlWebpackPlugin.files.chunks.main.entry %>"></script>
+
+</body>
+</html>
