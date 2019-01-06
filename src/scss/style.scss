@@ -39,6 +39,7 @@ body {
     display: grid;
 
     @media (min-width: 480px) {
+      color: #fff;
       background-image: url(../img/joker.jpg);
       background-color: #ff0;
     }
