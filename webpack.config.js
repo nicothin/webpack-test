@@ -45,7 +45,20 @@ let conf = {
           loader: 'file-loader',
           options: {
             name: '[name].[ext]',
-            outputPath: 'fonts/',
+            outputPath: 'fonts',
+            publicPath: '../fonts',
+          }
+        }
+      },
+      {
+        test: /\.(jpg|jpeg|png|svg|gif)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'img',
+            publicPath: '../img',
           }
         }
       },
